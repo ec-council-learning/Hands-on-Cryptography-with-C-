@@ -1,0 +1,8 @@
+file: main.cpp
+line: 10
+align: middle
+---
+        if (0 == isalpha(character)) {
+            output.append(1, character);
+            continue;
+        }

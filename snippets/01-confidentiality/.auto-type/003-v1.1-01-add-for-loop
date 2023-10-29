@@ -1,0 +1,8 @@
+file: main.cpp
+line: 8
+align: middle
+---
+⇥
+    for (const auto& character : source) {
+
+    }

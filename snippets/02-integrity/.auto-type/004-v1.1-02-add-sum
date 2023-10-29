@@ -1,0 +1,5 @@
+file: main.cpp
+line: 10
+align: middle
+---
+        checksum += character;

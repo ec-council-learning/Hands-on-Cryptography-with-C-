@@ -1,0 +1,6 @@
+file: main.cpp
+line: 7
+align: middle
+---
+    std::string source = "Hello, Cryptography!";
+    std::string output;

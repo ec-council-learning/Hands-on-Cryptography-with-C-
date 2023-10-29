@@ -1,0 +1,11 @@
+file: main.cpp
+line: 22
+align: bottom
+---
+
+    if (cs != 2350) {
+        std::cout << "The message is NOT authentic!" << std::endl;
+        return 1;
+    }
+
+    std::cout << "The message is authentic!" << std::endl;

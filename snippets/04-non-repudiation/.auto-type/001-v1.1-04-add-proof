@@ -1,0 +1,9 @@
+file: main.cpp
+line: 23
+align: middle
+---
+    std::string proof;
+    proof.append("checksum:");
+    proof.append(std::to_string(cs));
+
+    std::cout << "The proof is '" << proof << "'" << std::endl;

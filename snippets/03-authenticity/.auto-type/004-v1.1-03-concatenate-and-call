@@ -1,0 +1,7 @@
+file: main.cpp
+line: 19
+align: middle
+---
+
+    std::string signed_message = message.append(author);
+    unsigned int cs = checksum(signed_message);

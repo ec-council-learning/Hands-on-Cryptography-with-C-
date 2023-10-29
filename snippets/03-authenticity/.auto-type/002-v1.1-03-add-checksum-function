@@ -1,0 +1,14 @@
+file: main.cpp
+line: 4
+align: middle
+---
+
+unsigned int checksum(std::string message) {
+    unsigned int checksum = 0;
+
+    for (const auto& character : message) {
+        checksum += character;
+    }
+
+    return checksum;
+}

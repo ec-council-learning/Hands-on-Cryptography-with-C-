@@ -1,0 +1,9 @@
+file: main.cpp
+line: 11
+align: middle
+---
+⇥
+
+    std::cout << "The checksum is: "
+              << checksum
+              << std::endl;

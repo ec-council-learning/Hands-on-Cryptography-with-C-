@@ -1,0 +1,9 @@
+file: main.cpp
+line: 23
+align: bottom
+---
+⇥
+
+    std::cout << "The encrypted message is: "
+              << output
+              << std::endl;

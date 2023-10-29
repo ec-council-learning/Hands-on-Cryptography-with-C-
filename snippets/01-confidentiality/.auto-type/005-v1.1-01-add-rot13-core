@@ -1,0 +1,11 @@
+file: main.cpp
+line: 14
+align: middle
+---
+
+        if ((tolower(character) - 'a') < 14) {
+            // add 13
+        }
+        else {
+            // take 13
+        }

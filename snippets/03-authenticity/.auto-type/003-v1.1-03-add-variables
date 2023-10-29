@@ -1,0 +1,6 @@
+file: main.cpp
+line: 17
+align: middle
+---
+    std::string message = "HELLO WORLD";
+    std::string author = " by Gregory Saive";
