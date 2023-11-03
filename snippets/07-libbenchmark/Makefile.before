@@ -1,13 +1,4 @@
-
-# This file constitutes the root Makefile for source code, snippets and programs
-# built in the online course: Hands-On Cryptography with C++.
-#
-# Following commands are available:
-#
-# - make all
-# - make clean
-#
-EXECUTABLE_FILE = ROT13
+EXECUTABLE_FILE = FiboBenchmark
 TARGET_DIR = .
 BUILD_DIR = ./build
 SOURCES_DIR = ./src
@@ -31,7 +22,6 @@ install: clean $(OBJECTS)
 	@echo "Linking $(TARGET)"; $(CC) $(OBJECTS) -o $(TARGET)
 	@chmod a+x $(TARGET)
 	@echo ""
-	@echo "ROT13 built successfully"
+	@echo "FiboBenchmark built successfully"
 	@echo "Compiled assets can be found in $(OUTDIR)"
-	@echo "To run ROT13, use: $(TARGET)"
-
+	@echo "To run FiboBenchmark, use: $(TARGET)"

@@ -1,0 +1,20 @@
+file: src/benchmark.cpp
+line: 1
+align: top
+---
+#include <chrono>
+#include "benchmark.h"
+
+namespace benchmark {
+
+  // shortcuts
+  using std::chrono::duration;
+  using std::chrono::time_point;
+  using std::chrono::steady_clock;
+
+  // defines the run_predicate function
+  double run_predicate(predicate_t fun) {
+
+  }
+
+}

@@ -1,0 +1,5 @@
+file: Makefile
+line: 26
+align: middle
+---
+→→→→→→→→→→→→→→→→→→→→→⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫libbenchmark↓↓⇥←⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫add -L/tmp/lib -l$(LIBNAME)←←←←←←←←←←←←←←←←←←←←←←←←←←←←←⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫libbenchmark

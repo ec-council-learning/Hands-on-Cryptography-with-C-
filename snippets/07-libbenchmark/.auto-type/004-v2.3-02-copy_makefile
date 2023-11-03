@@ -1,0 +1,6 @@
+file: Makefile
+line: 1
+align: top
+---
+LIBNAME = benchmark
+→→→→→→→→→→⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫LIBRARY→→→→→→→→→→→→→→→→→→→→→⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫⌫"lib$(LIBNAME).so"↓⇥⌫/tmp/lib

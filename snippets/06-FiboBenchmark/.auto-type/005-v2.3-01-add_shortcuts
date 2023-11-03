@@ -1,0 +1,9 @@
+file: src/benchmark.cpp
+line: 6
+align: middle
+---
+
+  // shortcuts
+  using std::chrono::duration;
+  using std::chrono::time_point;
+  using std::chrono::steady_clock;

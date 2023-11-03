@@ -1,0 +1,9 @@
+file: src/algorithms.h
+line: 1
+align: top
+---
+namespace my_algorithms {
+  unsigned long int fibonacci(
+    unsigned int number
+  );
+}

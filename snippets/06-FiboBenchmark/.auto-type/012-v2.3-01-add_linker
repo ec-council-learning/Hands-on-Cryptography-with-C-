@@ -1,0 +1,15 @@
+file: Makefile
+line: 17
+align: middle
+---
+
+clean:
+	rm -f $(BUILD_DIR)/* $(TARGET)
+
+install: clean $(OBJECTS)
+	@echo "Linking $(TARGET)"; $(CC) $(OBJECTS) -o $(TARGET)
+	@chmod a+x $(TARGET)
+	@echo ""
+	@echo "FiboBenchmark built successfully"
+	@echo "Compiled assets can be found in $(OUTDIR)"
+	@echo "To run FiboBenchmark, use: $(TARGET)"

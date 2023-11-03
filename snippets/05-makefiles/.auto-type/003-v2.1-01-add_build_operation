@@ -1,0 +1,8 @@
+file: Makefile
+line: 13
+align: middle
+---
+⇥
+
+$(BUILD_DIR)/%.o: $(SOURCES_DIR)/%.cpp
+	@echo "Compiling $<..."; $(CXX) -c -o $@ $<

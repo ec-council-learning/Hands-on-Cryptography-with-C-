@@ -1,0 +1,7 @@
+file: src/benchmark.h
+line: 1
+align: top
+---
+namespace benchmark {
+  double run_fibonacci();
+}

@@ -1,0 +1,9 @@
+file: src/benchmark.cpp
+line: 10
+align: middle
+---
+⇥
+
+  double run_fibonacci() {
+
+  }

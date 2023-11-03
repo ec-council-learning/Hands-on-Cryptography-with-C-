@@ -1,0 +1,7 @@
+file: src/main.cpp
+line: 6
+align: middle
+---
+  std::cout << std::endl 
+    << "Welcome to FiboBenchmark!"
+    << std::endl;

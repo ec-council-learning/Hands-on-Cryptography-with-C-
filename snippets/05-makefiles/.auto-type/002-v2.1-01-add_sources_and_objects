@@ -1,0 +1,8 @@
+file: Makefile
+line: 10
+align: middle
+---
+⇥
+
+SOURCES = $(shell find $(SOURCES_DIR) -type f -name *.cpp)
+OBJECTS := $(patsubst $(SOURCES_DIR)/%,$(BUILD_DIR)/%,$(SOURCES:.cpp=.o))

@@ -1,0 +1,16 @@
+file: src/benchmark.cpp
+line: 13
+align: middle
+---
+    // start a chronometer
+    time_point<steady_clock> start = steady_clock::now();
+
+    // execute the fibonacci backwards sum
+    unsigned long int fb = my_algorithms::fibonacci(42);
+
+    // stop the chronometer
+    time_point<steady_clock> end = steady_clock::now();
+
+    // compute elapsed time
+    duration<double> elapsed_seconds = end - start;
+    return elapsed_seconds.count();

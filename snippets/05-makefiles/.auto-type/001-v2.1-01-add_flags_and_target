@@ -1,0 +1,14 @@
+file: Makefile
+line: 1
+align: top
+---
+EXECUTABLE_FILE = ROT13
+TARGET_DIR = .
+BUILD_DIR = ./build
+SOURCES_DIR = ./src
+
+TARGET = $(TARGET_DIR)/$(EXECUTABLE_FILE)
+
+CC = clang++ -arch x86_64
+XX_FLAGS = -std=c++11
+CXX = $(CC) $(XX_FLAGS)

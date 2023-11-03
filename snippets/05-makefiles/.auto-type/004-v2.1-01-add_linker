@@ -1,0 +1,15 @@
+file: Makefile
+line: 16
+align: middle
+---
+⇥
+
+clean:
+	rm -f $(BUILD_DIR)/* $(TARGET)
+
+install: clean $(OBJECTS)
+	@echo "Linking $(TARGET)"; $(CC) $(OBJECTS) -o $(TARGET)
+	@chmod a+x $(TARGET)
+	@echo ""
+	@echo "ROT13 built successfully"
+	@echo "To run ROT13, use: $(TARGET)"

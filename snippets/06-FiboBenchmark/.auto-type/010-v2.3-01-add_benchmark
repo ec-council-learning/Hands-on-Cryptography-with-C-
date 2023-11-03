@@ -1,0 +1,13 @@
+file: src/main.cpp
+line: 8
+align: middle
+---
+⇥
+
+  double total_duration = benchmark::run_fibonacci();
+
+  std::cout << "Elapsed time: "
+            << total_duration << "s"
+            << std::endl;
+
+  return 0;
