@@ -1,0 +1,16 @@
+file: src/features.hpp
+line: 1
+align: top
+---
+⇥
+#include <map>
+#include "feature.hpp"
+
+namespace nextversion {
+  // declares a feature registry type (by name)
+  typedef std::map<std::string, feature*> feature_registry_t;
+
+  namespace cpp11 {
+
+  }
+}

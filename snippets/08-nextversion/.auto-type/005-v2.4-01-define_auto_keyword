@@ -1,0 +1,18 @@
+file: src/cpp11_auto_keyword.cpp
+line: 1
+align: top
+---
+⇥
+#include "features.hpp"
+
+namespace nextversion {
+namespace cpp11 {
+
+  // defines the run method
+  int auto_keyword::run() const
+  {
+
+  }
+
+}
+}

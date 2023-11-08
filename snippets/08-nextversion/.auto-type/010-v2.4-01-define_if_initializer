@@ -1,0 +1,18 @@
+file: src/cpp17_if_initializer.cpp
+line: 1
+align: top
+---
+⇥
+#include "features.hpp"
+
+namespace nextversion {
+namespace cpp17 {
+
+  // defines the run method
+  int if_initializer::run() const
+  {
+
+  }
+
+}
+}

@@ -1,0 +1,9 @@
+file: src/cpp11_auto_keyword.cpp
+line: 10
+align: middle
+---
+    auto a_sentence = "This is a sentence";
+    auto a_character = '!';
+    auto a_number = 123;
+
+    return 0;

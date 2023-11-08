@@ -1,0 +1,16 @@
+file: src/features.hpp
+line: 10
+align: middle
+---
+
+    // declares a feature class
+    class auto_keyword: public feature
+    {
+      public:
+        auto_keyword()
+          : feature("Keyword auto")
+        {}
+
+        // declares the run() function overload
+        int run() const;
+    };

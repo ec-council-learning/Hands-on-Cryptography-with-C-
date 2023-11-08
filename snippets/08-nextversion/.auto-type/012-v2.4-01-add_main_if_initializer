@@ -1,0 +1,8 @@
+file: src/main.cpp
+line: 7
+align: middle
+---
+typedef nextversion::cpp17::if_initializer cpp17_if_initializer;
+↓↓↓⇥,
+  { "init", new cpp17_if_initializer() }↓↓↓↓↓↓↓↓↓⇥
+            << "[init] if-block Initializers (C++17)" << std::endl

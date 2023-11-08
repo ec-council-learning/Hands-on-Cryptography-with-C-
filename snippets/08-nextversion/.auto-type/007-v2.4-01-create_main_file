@@ -1,0 +1,29 @@
+file: src/main.cpp
+line: 1
+align: top
+---
+⇥
+#include <iostream>
+#include "features.hpp"
+
+// shortcut name
+typedef nextversion::cpp11::auto_keyword cpp11_auto_keyword;
+
+// defines a feature registry (by name)
+nextversion::feature_registry_t feature_ids = {
+  { "auto", new cpp11_auto_keyword() }
+};
+
+int main()
+{
+  std::string input;
+
+  // display a menu
+  std::cout << "Choose one of the feature tests: " << std::endl
+            << "[auto] Auto keyword (C++11)" << std::endl
+            << "[quit] Quit program" << std::endl
+            << "Enter a feature name: ";
+
+  std::getline(std::cin, input);
+
+}

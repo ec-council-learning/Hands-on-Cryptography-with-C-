@@ -1,0 +1,43 @@
+// src/main.cpp
+#include <iostream>
+#include "features.hpp"
+
+// shortcut name
+typedef nextversion::cpp11::auto_keyword cpp11_auto_keyword;
+typedef nextversion::cpp17::if_initializer cpp17_if_initializer;
+
+// defines a feature registry (by name)
+nextversion::feature_registry_t feature_ids = {
+  { "auto", new cpp11_auto_keyword() },
+  { "init", new cpp17_if_initializer() }
+};
+
+int main()
+{
+  std::string input;
+
+  // display a menu
+  std::cout << "Choose one of the feature tests: " << std::endl
+            << "[auto] Auto keyword (C++11)" << std::endl
+            << "[init] if-block Initializers (C++17)" << std::endl
+            << "[quit] Quit program" << std::endl
+            << "Enter a feature name: ";
+
+  std::getline(std::cin, input);
+
+  // find the corresponding feature test implementation
+  nextversion::feature_registry_t::iterator it = feature_ids.find(input);
+  if (it == feature_ids.end()) {
+    std::cout << "Feature test not found." << std::endl;
+    return 1;
+  }
+
+  // execute the feature test
+  int result = (it->second)->run();
+  std::cout << "Feature test result: "
+            << (result == 0 ? "[OK]" : "Error")
+            << std::endl
+            << std::endl;
+
+  return 0;
+}

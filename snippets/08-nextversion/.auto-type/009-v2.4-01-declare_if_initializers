@@ -1,0 +1,21 @@
+file: src/features.hpp
+line: 23
+align: top
+---
+⇥
+
+  namespace cpp17 {
+
+    // declares a feature class
+    class if_initializer: public feature
+    {
+      public:
+        if_initializer()
+          : feature("If/Switch Initializer")
+        {}
+
+        // declares the run() function overload
+        int run() const;
+    };
+
+  }

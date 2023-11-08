@@ -1,0 +1,20 @@
+file: src/main.cpp
+line: 24
+align: top
+---
+
+  // find the corresponding feature test implementation
+  nextversion::feature_registry_t::iterator it = feature_ids.find(input);
+  if (it == feature_ids.end()) {
+    std::cout << "Feature test not found." << std::endl;
+    return 1;
+  }
+
+  // execute the feature test
+  int result = (it->second)->run();
+  std::cout << "Feature test result: "
+            << (result == 0 ? "[OK]" : "Error")
+            << std::endl
+            << std::endl;
+
+  return 0;

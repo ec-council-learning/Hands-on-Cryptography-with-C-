@@ -1,0 +1,9 @@
+file: src/cpp17_if_initializer.cpp
+line: 10
+align: middle
+---
+    if (int a_number = 1; a_number == 1) {
+      return 0;
+    }
+
+    return 1;
