@@ -1,0 +1,17 @@
+file: src/main.cpp
+line: 6
+align: top
+---
+⇥
+#include <cryptopp/hex.h>
+#include <cryptopp/sha.h>↓↓↓↓⇥←, cipher_s256⇥
+  CryptoPP::SHA256 hash;↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+  // SHA-256 hash algorithm
+  CryptoPP::StringSource source(input, true, new CryptoPP::HashFilter(
+    hash,
+    new CryptoPP::HexEncoder(new CryptoPP::StringSink(cipher_s256))
+  ));
+↓↓↓↓
+  std::cout << "Result of SHA-256 Hashes: "
+            << cipher_s256
+            << std::endl;

@@ -1,0 +1,13 @@
+file: src/main.cpp
+line: 20
+align: medium
+---
+⇥
+  // base64-encode
+  CryptoPP::StringSource b64_source(cipher, true,  new CryptoPP::Base64Encoder(
+    new CryptoPP::StringSink(cipher_b64)
+  ));
+
+  std::cout << "Result of AES Encryption: "
+            << cipher_b64
+            << std::endl;

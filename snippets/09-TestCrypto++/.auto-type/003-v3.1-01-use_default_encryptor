@@ -1,0 +1,14 @@
+file: src/main.cpp
+line: 10
+align: top
+---
+⇥std::string input, cipher, cipher_b64;
+
+  std::cout << "Enter a message to encrypt: ";
+  std::getline(std::cin, input);
+
+  // encrypt
+  CryptoPP::StringSource enc_source(input, true, new CryptoPP::DefaultEncryptor(
+    "NotSoSecurePassword",
+    new CryptoPP::StringSink(cipher)
+  ));

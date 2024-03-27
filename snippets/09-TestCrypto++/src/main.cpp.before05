@@ -1,0 +1,31 @@
+// src/main.cpp
+#include <iostream>
+#include <string>
+#include <cryptopp/default.h>
+#include <cryptopp/filters.h>
+#include <cryptopp/base64.h>
+
+int main()
+{
+  std::string input, cipher, cipher_b64;
+
+  std::cout << "Enter a message to encrypt: ";
+  std::getline(std::cin, input);
+
+  // encrypt
+  CryptoPP::StringSource enc_source(input, true, new CryptoPP::DefaultEncryptor(
+    "NotSoSecurePassword",
+    new CryptoPP::StringSink(cipher)
+  ));
+
+  // base64-encode
+  CryptoPP::StringSource b64_source(cipher, true,  new CryptoPP::Base64Encoder(
+    new CryptoPP::StringSink(cipher_b64)
+  ));
+
+  std::cout << "Result of AES Encryption: "
+            << cipher_b64
+            << std::endl;
+
+  return 0;
+}
