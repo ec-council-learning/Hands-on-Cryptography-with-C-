@@ -1,0 +1,13 @@
+file: src/main.cpp
+line: 15
+align: top
+---
+
+  CryptoPP::StringSource source(input, true, new CryptoPP::StreamTransformationFilter(
+    cipher_algo,
+    new CryptoPP::StringSink(cipher)
+  ));
+
+  std::cout << "The Caesar Cipher is: "
+            << cipher
+            << std::endl;

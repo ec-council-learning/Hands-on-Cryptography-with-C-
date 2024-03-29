@@ -1,12 +1,5 @@
-# This file is part of the programs built in the online
-# course: Hands-On Cryptography with C++ for ECCouncil.
-#
-# Following commands are available:
-#
-# - make
-# - make clean
-#
-EXECUTABLE_FILE = TestCrypto++
+# Makefile
+EXECUTABLE_FILE = Caesar++
 TARGET_DIR = .
 BUILD_DIR = ./build
 SOURCES_DIR = ./src
@@ -24,8 +17,8 @@ ${TARGET}: clean $(OBJECTS)
 	@echo "Linking $(TARGET)"; $(CC) $(OBJECTS) -o $(TARGET) -lcryptopp
 	@chmod a+x $(TARGET)
 	@echo ""
-	@echo "TestCrypto++ built successfully"
-	@echo "To run TestCrypto++, use: $(TARGET)"
+	@echo "Caesar++ built successfully"
+	@echo "To run Caesar++, use: $(TARGET)"
 
 $(BUILD_DIR)/%.o: $(SOURCES_DIR)/%.cpp
 	@echo "Compiling $<..."; $(CXX) -c -o $@ $<

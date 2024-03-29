@@ -1,0 +1,11 @@
+file: src/caesar.h
+line: 5
+align: top
+---
+
+  /// \brief Interface for the data processing portion of a Caesar Cipher
+  class CaesarStreamTransformation : public CryptoPP::StreamTransformation
+  {
+  public:
+
+  };

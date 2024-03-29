@@ -6,7 +6,7 @@
 # - make
 # - make clean
 #
-EXECUTABLE_FILE = TestCrypto++
+EXECUTABLE_FILE = Caesar++
 TARGET_DIR = .
 BUILD_DIR = ./build
 SOURCES_DIR = ./src
@@ -21,11 +21,13 @@ SOURCES = $(shell find $(SOURCES_DIR) -type f -name *.cpp)
 OBJECTS := $(patsubst $(SOURCES_DIR)/%,$(BUILD_DIR)/%,$(SOURCES:.cpp=.o))
 
 ${TARGET}: clean $(OBJECTS)
+	@echo "Linking..."
 	@echo "Linking $(TARGET)"; $(CC) $(OBJECTS) -o $(TARGET) -lcryptopp
 	@chmod a+x $(TARGET)
 	@echo ""
-	@echo "TestCrypto++ built successfully"
-	@echo "To run TestCrypto++, use: $(TARGET)"
+	@echo "Caesar++ built successfully"
+	@echo "Compiled assets can be found in $(OUTDIR)"
+	@echo "To run Caesar++, use: $(TARGET)"
 
 $(BUILD_DIR)/%.o: $(SOURCES_DIR)/%.cpp
 	@echo "Compiling $<..."; $(CXX) -c -o $@ $<

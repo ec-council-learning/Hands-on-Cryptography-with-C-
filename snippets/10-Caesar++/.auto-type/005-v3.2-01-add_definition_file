@@ -1,0 +1,12 @@
+file: src/caesar.cpp
+line: 1
+align: top
+---
+// src/caesar.cpp
+#include "caesar.h"
+#include <cctype>
+
+// platform specific offset for alphabets
+// on UNIX upper=64, lower=96
+const unsigned int offset_lower = 'a' - 1,
+                   offset_upper = 'A' - 1;

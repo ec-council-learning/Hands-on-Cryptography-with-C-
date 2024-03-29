@@ -1,10 +1,10 @@
-
-# This file is part of the programs
-# built in the online course: Hands-On Cryptography with C++.
+# This file is part of the programs built in the online
+# course: Hands-On Cryptography with C++ for ECCouncil.
 #
 # Following commands are available:
 #
-# - make all
+# - make start
+# - make install
 # - make clean
 #
 EXECUTABLE_FILE = NextVersion

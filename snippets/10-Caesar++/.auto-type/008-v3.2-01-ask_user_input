@@ -1,0 +1,9 @@
+file: src/main.cpp
+line: 10
+align: top
+---
+  std::string input, cipher;
+  CaesarCipher cipher_algo;
+
+  std::cout << "Enter a message to encrypt: ";
+  std::getline(std::cin, input);
