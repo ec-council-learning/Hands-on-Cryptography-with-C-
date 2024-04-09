@@ -1,0 +1,10 @@
+file: src/main.cpp
+line: 15
+align: top
+---
+⇥
+  CryptoPP::SecByteBlock key_lc = Randomizer::generate_random_lc(32);↓↓↓↓↓
+
+  // display generated random bytes (linear congruential)
+  std::cout << "The LC_RNG random 32 bytes are:         ";
+  print_buffer(key_lc);

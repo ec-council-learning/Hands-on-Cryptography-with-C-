@@ -1,0 +1,17 @@
+file: src/utils.h
+line: 2
+align: top
+---
+⇥
+#include <cryptopp/base64.h> // Base64Encoder
+#include <cryptopp/files.h> // FileSink↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+  /// \brief Displays a AES ciphertext on the terminal (as base64)
+  inline void print_cipher(std::string cipher)
+  {
+    CryptoPP::StringSource encoder(cipher, true,  new CryptoPP::Base64Encoder(
+      new CryptoPP::FileSink(std::cout)
+    ));
+
+    std::cout << std::endl;
+  }

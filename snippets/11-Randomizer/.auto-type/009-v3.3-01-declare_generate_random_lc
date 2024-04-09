@@ -1,0 +1,10 @@
+file: src/random.h
+line: 2
+align: top
+---
+⇥, LC_RNG↓↓↓↓↓↓↓↓
+
+  /// \brief Generates a block of random bytes using LC_RNG
+  CryptoPP::SecByteBlock generate_random_lc(
+    size_t size
+  );

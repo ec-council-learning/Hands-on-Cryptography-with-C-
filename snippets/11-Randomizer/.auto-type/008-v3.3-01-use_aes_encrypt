@@ -1,0 +1,11 @@
+file: src/main.cpp
+line: 6
+align: top
+---
+⇥
+#include "aes.h"↓↓⇥
+using Randomizer::Utils::print_cipher;↓↓↓↓↓↓↓↓↓↓
+  // performs AES encryption
+  std::string cipher = Randomizer::aes_encrypt("Hello, world!");
+  std::cout << "The AES ciphertext (base64-encoded) is: ";
+  print_cipher(cipher);

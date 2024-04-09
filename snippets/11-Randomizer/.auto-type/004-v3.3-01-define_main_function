@@ -1,0 +1,24 @@
+file: src/main.cpp
+line: 1
+align: top
+---
+⇥
+#include <cryptopp/cryptlib.h> // SecByteBlock
+#include <iostream> // std::cout
+#include <string> // std::string
+#include "random.h" // Randomizer
+#include "utils.h" // print_buffer
+
+using Randomizer::Utils::print_buffer;
+
+int main()
+{
+  // generates random 32 bytes block
+  CryptoPP::SecByteBlock key = Randomizer::generate_random(32);
+
+  // display generated random bytes (auto-seeded)
+  std::cout << "The auto-seeded random 32 bytes are:    ";
+  print_buffer(key);
+
+  return 0;
+}

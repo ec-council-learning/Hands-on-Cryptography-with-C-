@@ -1,0 +1,15 @@
+file: src/random.h
+line: 1
+align: top
+---
+⇥
+#include <cryptopp/osrng.h> // AutoSeededRandomPool
+
+namespace Randomizer {
+
+  /// \brief Generates a block of random bytes using AutoSeededRandomPool
+  CryptoPP::SecByteBlock generate_random(
+    size_t size
+  );
+
+}
