@@ -1,0 +1,49 @@
+// src/ecdsa.cpp
+#include <cryptopp/filters.h> // StringSink
+#include <cryptopp/hex.h> // HexEncoder, HexDecoder
+#include <cryptopp/base64.h> // Base64Encoder, Base64Decoder
+#include <cryptopp/osrng.h> // AutoSeededRandomPool
+#include <cryptopp/eccrypto.h> // ECDSA, ECP, SHA256
+#include <cryptopp/oids.h> // ASN1::secp256k1
+#include "format.h" // key_to_hex, bytes_to_hex
+#include "ecdsa.h"
+
+using CryptoPP::ECDSA, CryptoPP::ECP, CryptoPP::SHA256, CryptoPP::byte;
+using SignerImpl = ECDSA<ECP, SHA256>::Signer;
+using VerifierImpl = ECDSA<ECP, SHA256>::Verifier;
+using PrivateKeyImpl = ECDSA<ECP, SHA256>::PrivateKey;
+using PublicKeyImpl = ECDSA<ECP, SHA256>::PublicKey;
+using CryptoStars::Format::key_to_hex;
+using CryptoStars::Format::bytes_to_hex;
+
+int CryptoStars::ECDSA::Compute() {
+  // Computation cannot happen without a message
+  if (m_vargs.end() == m_vargs.find("message")) {
+    return 1;
+  }
+
+  // reads parameters
+  std::string input = m_vargs["message"];
+
+  /* Operation::Sign */
+  if (m_op == Operation::Sign) {
+    return DoSign(input);
+  }
+
+  /* Operation::Verify */
+  std::string publicKey = m_vargs["publicKey"],
+              signature = m_vargs["signature"];
+  return DoVerify(publicKey, input, signature);
+}
+
+int CryptoStars::ECDSA::DoSign(const std::string& input) {
+
+}
+
+int CryptoStars::ECDSA::DoVerify(
+  const std::string& publicKeyEncoded,
+  const std::string& input,
+  const std::string& signatureHex
+) {
+
+}

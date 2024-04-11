@@ -1,0 +1,35 @@
+// src/aes.h
+#ifndef __CRYPTOSTARS_AES_H__
+#define __CRYPTOSTARS_AES_H__
+
+#include <string> // string
+#include <vector> // vector
+#include "algorithm.h" // Algorithm
+#include "types.h" // Operation, ParametersList, OperationsMap
+
+namespace CryptoStars {
+  class AES : public Algorithm
+  {
+  public:
+    AES() : Algorithm("AES") {}
+
+    int Compute() override;
+
+    OperationsMap GetOperations() const override {
+      return std::map<Operation, std::string>({
+        { Operation::Encrypt, "(e)ncrypt - Encrypt a message" },
+        { Operation::Decrypt, "(d)ecrypt - Decrypt a message" }
+      });
+    }
+
+    ParametersList GetParameters(Operation op) const override {
+      return std::vector<std::string>({ "password", "message" });
+    }
+
+  protected:
+    int DoEncrypt(std::string input, std::string password);
+    int DoDecrypt(std::string input, std::string password);
+  };
+}
+
+#endif

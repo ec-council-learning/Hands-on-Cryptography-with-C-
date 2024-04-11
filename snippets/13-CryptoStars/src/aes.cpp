@@ -1,0 +1,66 @@
+// src/aes.cpp
+#include <cryptopp/default.h> // DefaultEncryptor, DefaultDecryptor
+#include <cryptopp/filters.h> // StringSink, StringSource
+#include <cryptopp/base64.h> // Base64Encoder, Base64Decoder
+#include "aes.h"
+
+int CryptoStars::AES::Compute()
+{
+  // Computation cannot happen without a message and password
+  bool has_password = m_vargs.end() != m_vargs.find("password");
+  bool has_message = m_vargs.end() != m_vargs.find("message");
+  if (!has_password || !has_message) {
+    return 1;
+  }
+
+  // declares the input and output variables
+  std::string input = m_vargs["message"],
+              password = m_vargs["password"],
+              output;
+
+  /* Operation::Encrypt */
+  if (m_op == Operation::Encrypt) {
+    return DoEncrypt(input, password);
+  }
+
+  /* Operation::Decrypt */
+  return DoDecrypt(input, password);
+}
+
+int CryptoStars::AES::DoEncrypt(std::string input, std::string password)
+{
+  std::string cipher, output;
+
+  // encrypt
+  CryptoPP::StringSource enc_source(input, true, new CryptoPP::DefaultEncryptor(
+    password.c_str(),
+    new CryptoPP::StringSink(cipher)
+  ));
+
+  // base64-encode
+  CryptoPP::StringSource b64_source(cipher, true,  new CryptoPP::Base64Encoder(
+    new CryptoPP::StringSink(output)
+  ));
+
+  m_results["ciphertext"] = output;
+  return 0;
+}
+
+int CryptoStars::AES::DoDecrypt(std::string input, std::string password)
+{
+  std::string cipher, output;
+
+  // base64-decode
+  CryptoPP::StringSource b64_source(input, true,  new CryptoPP::Base64Decoder(
+    new CryptoPP::StringSink(cipher)
+  ));
+
+  // decrypt
+  CryptoPP::StringSource dec_source(cipher, true, new CryptoPP::DefaultDecryptor(
+    password.c_str(),
+    new CryptoPP::StringSink(output)
+  ));
+
+  m_results["plain"] = output;
+  return 0;
+}

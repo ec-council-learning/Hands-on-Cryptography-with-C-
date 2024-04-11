@@ -1,0 +1,15 @@
+// src/ecdh.cpp
+#include <cryptopp/osrng.h> // AutoSeededRandomPool
+#include <cryptopp/eccrypto.h> // ECDH, ECP, SHA256
+#include <cryptopp/oids.h> // ASN1::secp256r1
+#include "format.h" // key_to_hex
+#include "ecdh.h"
+
+using CryptoPP::ECP, CryptoPP::OID;
+using CryptoPP::SecByteBlock;
+using CryptoStars::Format::key_to_hex;
+using CryptoStars::Format::bytes_to_hex;
+
+int CryptoStars::ECDH::Compute() {
+
+}

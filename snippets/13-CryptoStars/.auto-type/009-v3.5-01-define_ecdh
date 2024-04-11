@@ -1,0 +1,35 @@
+file: src/ecdh.cpp
+line: 12
+align: top
+---
+↓↓  // NIST's 256 bit curve over f(p)
+  OID CURVE = CryptoPP::ASN1::secp256r1();
+  CryptoPP::AutoSeededRandomPool prng;
+
+  // prepares 2 keypairs ("Alice" and "Bob") - usually they would use different devices
+  CryptoPP::ECDH<ECP>::Domain alice(CURVE), bob(CURVE);
+  SecByteBlock alice_priv(alice.PrivateKeyLength()), alice_pub(alice.PublicKeyLength());
+  SecByteBlock bob_priv(bob.PrivateKeyLength()), bob_pub(bob.PublicKeyLength());
+
+  // generates the random keypairs using ECDH::Domain
+  alice.GenerateKeyPair(prng, alice_priv, alice_pub);
+  bob.GenerateKeyPair(prng, bob_priv, bob_pub);
+
+  // Alice and Bob shall agree on a shared secret
+  SecByteBlock alice_shared(alice.AgreedValueLength()),
+               bob_shared(bob.AgreedValueLength());
+
+  // creates the secret from Alice's perspective
+  alice.Agree(alice_shared, alice_priv, bob_pub); // A -> B
+
+  // creates the secret from Bob's perspective
+  bob.Agree(bob_shared, bob_priv, alice_pub); // B -> A
+
+  // ECDH works with 2 users so the results are many..
+  m_results["Alice.privateKey"] = bytes_to_hex(alice_priv);
+  m_results["Alice.publicKey"] = bytes_to_hex(alice_pub);
+  m_results["Alice.sharedSecret"] = bytes_to_hex(alice_shared);
+  m_results["Bob.privateKey"] = bytes_to_hex(bob_priv);
+  m_results["Bob.publicKey"] = bytes_to_hex(bob_pub);
+  m_results["Bob.sharedSecret"] = bytes_to_hex(bob_shared);
+  return 0;

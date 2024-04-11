@@ -1,0 +1,44 @@
+file: src/pkcs1.h
+line: 1
+align: top
+---
+⇥
+#ifndef __CURVYPP_PKCS1_H__
+#define __CURVYPP_PKCS1_H__
+#include <cryptopp/osrng.h> // AutoSeededRandomPool
+#include <cryptopp/rsa.h> // RSA, RSASSA.._SHA
+#include "format.h" // key_to_hex
+#include "keypair.h"
+
+namespace CurvyPP::PKCS1 {
+  using SignerImpl = CryptoPP::RSASSA_PKCS1v15_SHA_Signer;
+  using PrivateKeyImpl = CryptoPP::RSA::PrivateKey;
+  using PublicKeyImpl = CryptoPP::RSA::PublicKey;
+  using CurvyPP::Format::key_to_hex;
+
+  /// \brief A PKCS1 (RSA) specialization of the KeyPair class for RSA Cryptography
+  class KeyPair
+    : public CurvyPP::KeyPair<SignerImpl, PrivateKeyImpl, PublicKeyImpl>
+  {
+  public:
+    void GenerateRandom() {
+      // creates the private exponent
+      CryptoPP::AutoSeededRandomPool prng;
+      m_privateKey.GenerateRandomWithKeySize(prng, 3072);
+      m_publicKey = PublicKeyImpl(m_privateKey);
+
+      // creates the signer interface
+      m_signer = SignerImpl(m_privateKey);
+    }
+
+    std::string GetPublicKey() {
+      // reads the public key (96 bytes)
+      const CryptoPP::Integer& n = m_publicKey.GetModulus();
+      const CryptoPP::Integer& e = m_publicKey.GetPublicExponent();
+
+      // streams to a hex-encoder
+      return key_to_hex(n) + key_to_hex(e);
+    }
+  };
+}
+#endif

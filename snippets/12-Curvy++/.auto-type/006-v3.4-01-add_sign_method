@@ -1,0 +1,12 @@
+file: src/keypair.h
+line: 6
+align: top
+---
+⇥#include "signer.h"
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓⇥
+
+    /// \brief Signs a message and returns the signature payload (base64-encoded)
+    std::string Sign(std::string message) {
+      auto signer = new CurvyPP::Signer<SignerImpl>(m_signer);
+      return signer->Sign(message);
+    }

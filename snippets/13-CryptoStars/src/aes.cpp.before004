@@ -1,0 +1,20 @@
+// src/aes.cpp
+#include <cryptopp/default.h> // DefaultEncryptor, DefaultDecryptor
+#include <cryptopp/filters.h> // StringSink, StringSource
+#include <cryptopp/base64.h> // Base64Encoder, Base64Decoder
+#include "aes.h"
+
+int CryptoStars::AES::Compute()
+{
+
+}
+
+int CryptoStars::AES::DoEncrypt(std::string input, std::string password)
+{
+
+}
+
+int CryptoStars::AES::DoDecrypt(std::string input, std::string password)
+{
+
+}

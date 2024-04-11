@@ -1,0 +1,19 @@
+file: src/aes.cpp
+line: 48
+align: top
+---
+↓↓↓  std::string cipher, output;
+
+  // base64-decode
+  CryptoPP::StringSource b64_source(input, true,  new CryptoPP::Base64Decoder(
+    new CryptoPP::StringSink(cipher)
+  ));
+
+  // decrypt
+  CryptoPP::StringSource dec_source(cipher, true, new CryptoPP::DefaultDecryptor(
+    password.c_str(),
+    new CryptoPP::StringSink(output)
+  ));
+
+  m_results["plain"] = output;
+  return 0;

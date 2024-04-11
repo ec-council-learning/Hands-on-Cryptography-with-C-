@@ -1,0 +1,28 @@
+file: src/ecdsa.cpp
+line: 67
+align: top
+---
+↓↓↓↓↓↓  std::string sig_bytes;
+
+  // decodes the public key PEM and signature hex
+  CryptoPP::StringSource b64_public(publicKeyEncoded, true, new CryptoPP::Base64Decoder);
+  CryptoPP::StringSource hex_signature(signatureHex, true, new CryptoPP::HexDecoder(
+    new CryptoPP::StringSink(sig_bytes))
+  );
+
+  // loads the public key using decoded PEM
+  PublicKeyImpl publicKey;
+  publicKey.BERDecode(b64_public);
+  VerifierImpl verifier(publicKey);
+
+  // verifiable message is: signature || message
+  bool result = false;
+  std::string ciphertext = sig_bytes + input;
+  CryptoPP::StringSource sig_source(ciphertext, true /* pump-all */,
+    new CryptoPP::SignatureVerificationFilter(
+      verifier,
+      new CryptoPP::ArraySink((byte*)&result, sizeof(result))
+    ));
+
+  m_results["verified"] = result ? "VALID (OK)" : "NOT VALID (NOT OK)";
+  return 0;

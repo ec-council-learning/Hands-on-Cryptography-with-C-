@@ -1,0 +1,41 @@
+file: src/signer.h
+line: 1
+align: top
+---
+⇥
+#ifndef __CURVYPP_SIGNER_H__
+#define __CURVYPP_SIGNER_H__
+#include <cryptopp/filters.h> // StringSource, StringSink, SignerFilter
+#include <cryptopp/osrng.h> // AutoSeededRandomPool
+#include <cryptopp/hex.h> // HexEncoder
+#include <string> // std::string
+
+namespace CurvyPP {
+  /// \brief Wrapper class to manage digital signatures
+  template <typename signer_t>
+  class Signer
+  {
+    signer_t m_signer;
+  public:
+
+    Signer(signer_t signer)
+      : m_signer(signer) {}
+
+    std::string Sign(std::string message) {
+      std::string signature, sig_payload;
+      CryptoPP::AutoSeededRandomPool prng;
+
+      CryptoPP::StringSource sig_source(message, true, new CryptoPP::SignerFilter(prng,
+        m_signer,
+        new CryptoPP::StringSink(signature)
+      ));
+
+      CryptoPP::StringSource hex_source(signature, true,  new CryptoPP::HexEncoder(
+        new CryptoPP::StringSink(sig_payload)
+      ));
+
+      return sig_payload;
+    }
+  };
+}
+#endif

@@ -1,0 +1,31 @@
+// src/factory.h
+#ifndef __CURVYPP_FACTORY_H__
+#define __CURVYPP_FACTORY_H__
+#include "ed25519.h" // CurvyPP::Ed25519
+#include "secp256k1.h" // CurvyPP::Secp256
+#include "pkcs1.h" // CurvyPP::PKCS1
+
+namespace CurvyPP {
+  class Factory
+  {
+  public:
+    CurvyPP::Ed25519::KeyPair* CreateEd25519() {
+      auto keypair = new CurvyPP::Ed25519::KeyPair();
+      keypair->GenerateRandom();
+      return keypair;
+    }
+
+    CurvyPP::Secp256::KeyPair* CreateSecp256() {
+      auto keypair = new CurvyPP::Secp256::KeyPair();
+      keypair->GenerateRandom();
+      return keypair;
+    }
+
+    CurvyPP::PKCS1::KeyPair* CreatePKCS1() {
+      auto keypair = new CurvyPP::PKCS1::KeyPair();
+      keypair->GenerateRandom();
+      return keypair;
+    }
+  };
+}
+#endif

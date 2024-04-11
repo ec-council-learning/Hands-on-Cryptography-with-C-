@@ -1,0 +1,9 @@
+file: src/aes.h
+line: 26
+align: middle
+---
+⇥←←←←←←←←←←←←←"password", ↓⇥
+
+  protected:
+    int DoEncrypt(std::string input, std::string password);
+    int DoDecrypt(std::string input, std::string password);

@@ -1,0 +1,31 @@
+file: src/chacha20.cpp
+line: 52
+align: top
+---
+↓↓↓↓↓  std::string plain;
+  CryptoPP::byte key_bytes[ChaCha20::KEY_LENGTH],
+                 iv_bytes[ChaCha20::IV_LENGTH],
+                 input_bytes[input.length() / 2];
+
+  // recovers the key and IV from the secret key
+  // first 32 bytes of secretKey are from encryption key
+  // last 12 bytes of secretKey are from input vector
+  hex_to_bytes(&key_bytes[0], secretKey.substr(0, ChaCha20::KEY_LENGTH * 2));
+  hex_to_bytes(&iv_bytes[0], secretKey.substr(ChaCha20::KEY_LENGTH * 2));
+
+  // decodes the message from hex to binary
+  hex_to_bytes(&input_bytes[0], input);
+
+  // ChaChaTLS' key length=32, iv length=12
+  CryptoPP::SecByteBlock key(key_bytes, 32), iv(iv_bytes, 12);
+
+  // creates the decryptor
+  ChaChaTLS::Decryption dec;
+  dec.SetKeyWithIV(key, key.size(), iv, iv.size());
+
+  // performs the decryption
+  plain.resize(input.size());
+  dec.ProcessData((byte*)&plain[0], input_bytes, input.length() / 2);
+
+  m_results["plain"] = plain;
+  return 0;

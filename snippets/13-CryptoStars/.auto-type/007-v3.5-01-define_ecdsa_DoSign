@@ -1,0 +1,30 @@
+file: src/ecdsa.cpp
+line: 38
+align: top
+---
+↓↓  std::string signature, pub_payload;
+  CryptoPP::AutoSeededRandomPool prng;
+
+  // generates a random keypair
+  PrivateKeyImpl private_key;
+  PublicKeyImpl  public_key;
+  private_key.Initialize(prng, CryptoPP::ASN1::secp256k1());
+  private_key.MakePublicKey(public_key);
+
+  // stores the public key in a DER-encoded base64 envelope (PEM)
+  CryptoPP::Base64Encoder pubkey_sink(new CryptoPP::StringSink(pub_payload), false);
+  public_key.DEREncode(pubkey_sink);
+  pubkey_sink.MessageEnd();
+
+  // creates the signer interface
+  SignerImpl signer(private_key);
+  size_t length = signer.MaxSignatureLength();
+  CryptoPP::SecByteBlock signatureRaw(length);
+
+  // signs the message
+  signer.SignMessage(prng, (const byte*) input.data(), input.size(), signatureRaw);
+
+  m_results["privateKey"] = key_to_hex(private_key.GetPrivateExponent());
+  m_results["publicKey"] = pub_payload; // PEM format (base64 of DER-encoded key)
+  m_results["signature"] = bytes_to_hex(signatureRaw);
+  return 0;
