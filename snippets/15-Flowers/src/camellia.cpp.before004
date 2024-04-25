@@ -1,0 +1,6 @@
+// src/camellia.cpp
+#include "camellia.h" // CamelliaBreed
+#include <botan/block_cipher.h> // SymmetricKey
+#include <botan/base64.h> // Base64Encoder, Base64Decoder
+#include <botan/pipe.h> // Pipe
+#include <botan/filters.h> // get_cipher

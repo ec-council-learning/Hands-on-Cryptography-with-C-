@@ -1,0 +1,15 @@
+file: src/camellia.cpp
+line: 18
+align: middle
+---
+⇥
+std::string Flowers::CamelliaBreed::decrypt(std::string input) const {
+  Botan::SymmetricKey key(Botan::base64_decode(m_seed));
+  Botan::Pipe pipe(
+    new Botan::Base64_Decoder,
+    Botan::get_cipher("Camellia-256/CBC", key, Botan::Cipher_Dir::Decryption)
+  );
+
+  pipe.process_msg(input);
+  return pipe.read_all_as_string();
+}

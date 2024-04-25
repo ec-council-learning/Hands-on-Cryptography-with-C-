@@ -1,0 +1,28 @@
+// src/main.cpp
+#include <iostream> // std::cout
+#include <string> // std::string
+#include <memory> // std::make_unique
+#include "camellia.h" // xCamellia
+
+int main()
+{
+  std::string input;
+  std::cout << "Enter a message to encrypt: ";
+  std::getline(std::cin, input);
+
+  auto flower_lg = std::make_unique<Flowers::LargeCamellia>();
+  auto flower_md = std::make_unique<Flowers::MediumCamellia>();
+  auto flower_xs = std::make_unique<Flowers::TinyCamellia>();
+
+  std::string cipher_1 = flower_lg->encrypt(input),
+              cipher_2 = flower_md->encrypt(input),
+              cipher_3 = flower_xs->encrypt(input),
+              plain    = flower_lg->decrypt(cipher_1);
+
+  std::cout << "Result of LargeCamellia  (256): " << cipher_1 << std::endl;
+  std::cout << "Result of MediumCamellia (192): " << cipher_2 << std::endl;
+  std::cout << "Result of TinyCamellia   (128): " << cipher_3 << std::endl;
+  std::cout << "Result of Camellia Decryption : " << plain << std::endl;
+
+  return 0;
+}
