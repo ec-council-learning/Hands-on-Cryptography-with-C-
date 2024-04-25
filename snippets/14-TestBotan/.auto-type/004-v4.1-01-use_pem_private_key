@@ -1,0 +1,13 @@
+file: src/functions.cpp
+line: 6
+align: top
+---
+⇥
+#include <botan/ecdsa.h> // ECDSA_PrivateKey
+#include <botan/ec_group.h> // EC_Group
+#include <botan/pkcs8.h> // PKCS8::PEM_encode↓↓↓↓↓↓↓↓↓↓↓⇥
+
+std::string pem_encoded_key() {
+  Botan::ECDSA_PrivateKey ecdsa_key(g_rng, Botan::EC_Group("secp256r1"));
+  return Botan::PKCS8::PEM_encode(ecdsa_key, g_rng, "");
+}

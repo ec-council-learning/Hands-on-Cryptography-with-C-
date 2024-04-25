@@ -1,0 +1,14 @@
+file: src/functions.cpp
+line: 9
+align: top
+---
+⇥
+#include <botan/hash.h> // HashFunction
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓⇥
+
+std::string whirlpool_hash(std::string input) {
+  std::vector<uint8_t> bytes(input.begin(), input.end());
+  const auto hash = Botan::HashFunction::create_or_throw("Whirlpool");
+  hash->update(bytes);
+  return Botan::hex_encode(hash->final());
+}

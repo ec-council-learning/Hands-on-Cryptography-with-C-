@@ -1,0 +1,8 @@
+file: Makefile
+line: 8
+align: middle
+---
+⇥
+BOTAN_CC = `botan config cflags`
+BOTAN_LIBS = `botan config libs`
+↓↓↓⇥ $(BOTAN_CC)↓↓↓↓↓↓⇥ $(BOTAN_LIBS)
