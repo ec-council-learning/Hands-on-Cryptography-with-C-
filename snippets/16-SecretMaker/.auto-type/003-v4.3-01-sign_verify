@@ -1,0 +1,14 @@
+file: Makefile
+line: 7
+align: top
+---
+⇥↓↓↓↓↓↓↓⇥
+SIGN= $(B) sign $(DATA_DIR)/id_rsa
+VER = $(B) verify $(DATA_DIR)/id_rsa.pub↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓⇥
+
+sign:
+	@echo "Signing $(DATA_DIR)/document in $(DATA_DIR)/document.sig"; \
+		$(SIGN) $(DATA_DIR)/document > $(DATA_DIR)/document.sig
+verify:
+	@echo "Verifying ECDSA signature: $(DATA_DIR)/document.sig"; \
+		$(VER) $(DATA_DIR)/document $(DATA_DIR)/document.sig

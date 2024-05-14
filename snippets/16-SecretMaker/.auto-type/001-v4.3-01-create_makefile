@@ -1,0 +1,27 @@
+file: Makefile
+line: 1
+align: top
+---
+⇥
+DATA_DIR = ./data
+
+# Botan CLI shortcuts 
+B = botan
+RNG = $(B) rng --format=hex --auto
+RSA = $(B) keygen --algo=RSA
+PUB = $(B) pkcs8 --pub-out
+CERT= $(B) gen_self_signed --der $(DATA_DIR)/id_rsa
+
+keys:
+	@echo "Secret key of 16 bytes in $(DATA_DIR)/random16.hex"; \
+		$(RNG) 16 > $(DATA_DIR)/random16.hex
+	@echo "Secret key of 32 bytes in $(DATA_DIR)/random32.hex"; \
+		$(RNG) 32 > $(DATA_DIR)/random32.hex
+	@echo "Secret key of 64 bytes in $(DATA_DIR)/random64.hex"; \
+		$(RNG) 64 > $(DATA_DIR)/random64.hex
+	@echo "RSA private key in $(DATA_DIR)/id_rsa"; \
+		$(RSA) > $(DATA_DIR)/id_rsa
+	@echo "RSA public key in $(DATA_DIR)/id_rsa.pub"; \
+		$(PUB) $(DATA_DIR)/id_rsa > $(DATA_DIR)/id_rsa.pub
+	@echo "X.509 (self-signed) Certificate in $(DATA_DIR)/my_domain.com.cert"; \
+		$(CERT) my_domain.com > $(DATA_DIR)/my_domain.com.cert

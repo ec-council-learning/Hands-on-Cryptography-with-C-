@@ -1,0 +1,17 @@
+file: Makefile
+line: 2
+align: top
+---
+⇥
+ENC_KEY = `cat $(DATA_DIR)/random32.hex`
+ENC_IV = `cat $(DATA_DIR)/random16.hex`
+AES = AES-256/GCM↓↓↓↓↓↓↓⇥
+ENC = $(B) cipher --cipher="$(AES)" --key=$(ENC_KEY) --nonce=$(ENC_IV)
+DEC = $(B) cipher --cipher="$(AES)" --key=$(ENC_KEY) --nonce=$(ENC_IV) --decrypt↓↓↓↓↓↓↓↓↓↓↓↓↓↓⇥
+
+encrypt:
+	@echo "Creating encrypted copy of RSA private key in $(DATA_DIR)/id_rsa.sec"; \
+		$(ENC) $(DATA_DIR)/id_rsa > $(DATA_DIR)/id_rsa.sec
+decrypt:
+	@echo "Decrypting RSA private key in $(DATA_DIR)/id_rsa.dec"; \
+		$(DEC) $(DATA_DIR)/id_rsa.sec > $(DATA_DIR)/id_rsa.dec
