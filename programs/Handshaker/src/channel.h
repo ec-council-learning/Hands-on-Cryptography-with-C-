@@ -1,0 +1,36 @@
+// src/channel.h
+#ifndef __HANDSHAKER_CHANNEL_H__
+#define __HANDSHAKER_CHANNEL_H__
+#include <string>
+#include <span>
+#include <botan/tls.h>
+#include "socket.h"
+
+namespace Handshaker {
+
+  typedef Handshaker::socket_type socket_type_t;
+
+  class HandshakeOnlyChannel
+  {
+  private:
+    socket_type_t m_sockfd = Handshaker::invalid_socket();
+    std::string   m_host;
+    unsigned int  m_port;
+    bool          m_completed = false;
+
+  public:
+    bool with_debug = false;
+
+    HandshakeOnlyChannel() : HandshakeOnlyChannel("evi.as", 443) {}
+    HandshakeOnlyChannel(const std::string& host, unsigned int port)
+      : m_host(host), m_port(port) {}
+
+    virtual ~HandshakeOnlyChannel() {};
+    inline void SetHandshakeComplete() { m_completed = true; }
+    inline void SetDebugMode(bool d) { with_debug = d; }
+
+    int TryHandshakeWithServer();
+    void SendMessage(std::span<const uint8_t> buf) const;
+  };
+}
+#endif

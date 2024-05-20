@@ -1,0 +1,59 @@
+file: src/listeners.cpp
+line: 1
+align: top
+---
+⇥
+#include "listeners.h"
+#include <iostream> // std::cout
+#include <botan/hex.h>
+
+void Handshaker::Listeners::tls_emit_data(
+  std::span<const uint8_t> data
+) {
+  auto data_str = Botan::hex_encode(data);
+  std::cout << "emit(" << data_str.size() << " bytes)" << std::endl;
+
+  if (m_channel.with_debug) {
+    std::cout << "-> data: " << data_str << std::endl;
+  }
+}
+
+void Handshaker::Listeners::tls_record_received(
+  uint64_t seq_no,
+  std::span<const uint8_t> data
+) {
+  auto data_str = Botan::hex_encode(data);
+  std::cout << "received(" << seq_no << ", " << data_str.size() << " bytes)" << std::endl;
+
+  if (m_channel.with_debug) {
+    std::cout << "-> data: " << data_str << std::endl;
+  }
+}
+
+void Handshaker::Listeners::tls_alert(
+  Botan::TLS::Alert alert
+) {
+  std::cout << "alert('" << alert.type_string() << "')" << std::endl;
+}
+
+void Handshaker::Listeners::tls_session_established(
+  const Botan::TLS::Session_Summary &session
+) {
+  std::cout << "handshake(" 
+            << "'" << session.version().to_string() << "', "
+            << "'" << session.ciphersuite().to_string() << "'"
+            << ")" << std::endl;
+
+  if(const auto& session_id = session.session_id(); !session_id.empty()) {
+    std::cout << "session("
+              << "'" << Botan::hex_encode(session_id.get()) << "'"
+              << ")" << std::endl;
+  }
+}
+
+void Handshaker::Listeners::tls_session_activated() {
+  std::cout << "Handshake complete." << std::endl;
+
+  // Closes the channel ("HandshakeOnlyChannel")
+  m_channel.SetHandshakeComplete();
+}
