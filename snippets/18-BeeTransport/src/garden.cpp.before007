@@ -1,0 +1,55 @@
+// src/garden.cpp
+#include "garden.h"
+#include "camellia.h" // TinyCamellia, MediumCamellia, LargeCamellia
+#include <memory> // std::unique_ptr, std::make_unique
+#include <iostream> // std::cout
+#include <sstream> // std::stringstream
+#include <botan/auto_rng.h> // AutoSeeded_RNG
+#include <botan/base64.h> // base64_encode, base64_decode
+
+using BeeTransport::Flower;
+using BeeTransport::TinyCamellia,
+      BeeTransport::MediumCamellia,
+      BeeTransport::LargeCamellia;
+
+BeeTransport::PrivateGarden::PrivateGarden(size_t count_flowers)  {
+  Botan::AutoSeeded_RNG rng;
+
+  for (auto i = 0; i < count_flowers; i++) {
+    uint8_t rand_byte = rng.next_byte();
+    size_t key_size = 0;
+
+    if (rand_byte <= 85) key_size = 16;
+    else if (rand_byte <= 170) key_size = 24;
+    else /* uint8_t max 255 */ key_size = 32;
+
+    m_keys.push_back(
+      Botan::base64_encode(rng.random_vec(key_size))
+    );
+  }
+
+  m_parent_of = std::map<std::string, std::string>{};
+}
+
+/// \brief Makes a BeeTransport::Flower instance (factory)
+std::unique_ptr<Flower> BeeTransport::PrivateGarden::make_flower(
+  const std::string& key
+) {
+  std::unique_ptr<Flower> flower;
+  auto seed = Botan::base64_decode(key);
+
+  if (seed.size() == 16)
+    flower = std::make_unique<TinyCamellia>(key);
+  else if (seed.size() == 24)
+    flower = std::make_unique<MediumCamellia>(key);
+  else /* seed.size() == 32 */
+    flower = std::make_unique<LargeCamellia>(key);
+
+  // Look-above container for faster parent discovery
+  m_parent_of.emplace(flower->get_bud(), flower->get_seed()); // (child, parent)
+
+  std::cout << "-> created flower: " << key << std::endl;
+  if (with_debug) std::cout << "   -> algorithm: " << flower->name() << std::endl;
+
+  return /* std::move */flower;
+}

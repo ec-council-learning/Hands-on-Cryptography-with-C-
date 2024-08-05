@@ -1,0 +1,10 @@
+file: src/camellia.h
+line: 10
+align: top
+---
+⇥
+    CamelliaBreed(const std::string& key) : Flower(key) {}
+    std::string name() const override;↓↓↓↓↓↓↓↓⇥
+    LargeCamellia(const std::string& key) : CamelliaBreed(key) {}↓↓↓↓↓↓⇥
+    MediumCamellia(const std::string& key) : CamelliaBreed(key) {}↓↓↓↓↓↓⇥
+    TinyCamellia(const std::string& key) : CamelliaBreed(key) {}

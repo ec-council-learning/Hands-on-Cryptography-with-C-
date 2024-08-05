@@ -1,0 +1,14 @@
+file: src/flower.h
+line: 13
+align: top
+---
+⇥
+    size_t m_size;
+    std::string m_bud;↓↓⇥
+    bool has_breed = false;
+↓↓⇥←← m_bud = reproduce();↓↓↓⇥
+      m_bud = reproduce();↓↓↓↓↓⇥, m_bud(f.m_bud), m_size(f.m_size), has_breed(f.has_breed)↓↓↓↓↓⇥
+    std::string get_bud() const { return m_bud; }↓↓↓⇥
+
+  private:
+    std::string reproduce();

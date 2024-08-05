@@ -1,0 +1,28 @@
+file: src/garden.cpp
+line: 32
+align: top
+---
+⇥
+
+/// \brief Makes a BeeTransport::Flower instance (factory)
+std::unique_ptr<Flower> BeeTransport::PrivateGarden::make_flower(
+  const std::string& key
+) {
+  std::unique_ptr<Flower> flower;
+  auto seed = Botan::base64_decode(key);
+
+  if (seed.size() == 16)
+    flower = std::make_unique<TinyCamellia>(key);
+  else if (seed.size() == 24)
+    flower = std::make_unique<MediumCamellia>(key);
+  else /* seed.size() == 32 */
+    flower = std::make_unique<LargeCamellia>(key);
+
+  // Look-above container for faster parent discovery
+  m_parent_of.emplace(flower->get_bud(), flower->get_seed()); // (child, parent)
+
+  std::cout << "-> created flower: " << key << std::endl;
+  if (with_debug) std::cout << "   -> algorithm: " << flower->name() << std::endl;
+
+  return /* std::move */flower;
+}

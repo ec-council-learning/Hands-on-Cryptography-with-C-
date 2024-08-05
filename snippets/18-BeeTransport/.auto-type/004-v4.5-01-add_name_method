@@ -1,0 +1,9 @@
+file: src/camellia.cpp
+line: 6
+align: top
+---
+⇥
+
+std::string BeeTransport::CamelliaBreed::name() const {
+  return get_algorithm();
+}

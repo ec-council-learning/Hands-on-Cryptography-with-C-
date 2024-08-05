@@ -1,0 +1,33 @@
+// src/flower.cpp
+#include "flower.h"
+#include <botan/base64.h> // base64_encode, base64_decode
+#include <botan/hash.h> // HashFunction
+
+/// \brief Creates a subkey from the seed (without KDF), please don't reproduce.
+/// \note The subkey uses the seed as follows: second_half || sha256(first_half)
+/// \note The resulting subkey is truncated to the same size as its parent.
+std::string BeeTransport::Flower::reproduce()
+{
+  auto hash = Botan::HashFunction::create_or_throw("SHA-256");
+  auto seed = Botan::base64_decode(m_key);
+  auto half = seed.size() / 2;
+  m_size = seed.size();
+
+  // Grains take the same memory space as their flower
+  std::vector<uint8_t> grain(m_size);
+
+  // Uses a sha-256 hash of the first half of a seed
+  hash->update(seed.data(), half);
+  auto next = hash->final();
+
+  // Puts the second half of the seed
+  std::copy(seed.begin() + half, seed.end(), grain.begin());
+
+  // Puts the sha-256 hash of the first half of the seed
+  // Caution: we use a maximum of 16 bytes of the hash!
+  std::copy(next.begin(), next.begin() + half, grain.begin() + half);
+
+  // Each bud consists in a constructed key
+  // Caution: This is not recommended in production.
+  return Botan::base64_encode(grain);
+}

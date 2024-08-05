@@ -1,0 +1,34 @@
+file: src/garden.cpp
+line: 52
+align: top
+---
+↓↓↓⇥
+
+/// \brief Creates new Flower instances by key size
+void BeeTransport::PrivateGarden::SeedNewFlowers() {
+  for (auto current_seed : m_keys) {
+    std::unique_ptr<Flower> flower = make_flower(current_seed);
+    m_flowers.emplace_back(std::move(flower));
+  }
+}
+
+/// \brief Safely wraps pollen grains to prepare for safe transport
+void BeeTransport::PrivateGarden::PrepareSafeBeeTransport() {
+  Botan::AutoSeeded_RNG rng;
+  for (auto& flower : m_flowers) {
+    // Flowers create grains once
+    if (flower->has_breed) continue;
+
+    // Flowers create 1 grain for bee's transport
+    auto seed = flower->get_seed();
+    auto bud = flower->get_bud();
+    auto grain = Botan::base64_decode(bud);
+
+    // Keys are encrypted so that bees' cannot unwrap them ;]
+    m_grains.emplace_back(flower->encrypt(
+      std::string(grain.begin(), grain.end())
+    ));
+
+    flower->has_breed = true;
+  }
+}
