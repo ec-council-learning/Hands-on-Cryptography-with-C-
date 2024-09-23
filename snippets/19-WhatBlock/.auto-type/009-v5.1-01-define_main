@@ -1,0 +1,14 @@
+file: src/main.cpp
+line: 17
+align: top
+---
+⇥        "AES-256       - Use the popular Advanced Encryption Standard",
+        "ARIA-256      - Use the South Korean block cipher Standard",
+        "Camellia-256  - Use the popular NESSIE Standard block cipher",
+        "Blowfish      - Use the pre-AES popular Blowfish standard",
+        "CAST-128      - Use the OpenPGP-featured block cipher (CASTS)",
+        "DES           - Use the Data Encryption Standard (caution!)",
+        "TripleDES     - Use the Triple Data Encryption Standard",
+        "IDEA          - Use the PGP-featured block cipher IDEA",
+        "SHACAL2       - Use the SHA-256-featured block cipher",
+        "Threefish-512 - Use the tweakable block cipher Threefish"

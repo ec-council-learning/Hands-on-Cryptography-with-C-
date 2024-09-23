@@ -1,0 +1,21 @@
+file: src/fixed.h
+line: 21
+align: top
+---
+⇥
+  
+  class Blowfish : public Cipher {
+  public:
+    Blowfish() : Cipher(8, 8) {}
+    std::string get_algorithm() const override {
+      return "Blowfish/CBC";
+    }
+  };
+
+  class Threefish : public Cipher {
+  public:
+    Threefish() : Cipher(64, 64) {}
+    std::string get_algorithm() const override {
+      return "Threefish-512/CBC";
+    }
+  };

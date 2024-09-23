@@ -1,0 +1,10 @@
+// src/dynamic.h
+#ifndef __WHATBLOCK_DYNAMIC_H__
+#define __WHATBLOCK_DYNAMIC_H__
+#include "cipher.h"
+
+namespace WhatBlock {
+
+}
+
+#endif

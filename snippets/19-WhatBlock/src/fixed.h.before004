@@ -1,0 +1,10 @@
+// src/fixed.h
+#ifndef __WHATBLOCK_FIXED_H__
+#define __WHATBLOCK_FIXED_H__
+#include "cipher.h"
+
+namespace WhatBlock {
+
+}
+
+#endif

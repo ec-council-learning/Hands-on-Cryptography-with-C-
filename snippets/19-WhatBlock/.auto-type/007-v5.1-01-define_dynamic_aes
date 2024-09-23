@@ -1,0 +1,16 @@
+file: src/dynamic.h
+line: 7
+align: top
+---
+  template <unsigned int nBits = 256>
+  class AES : public Cipher {
+  public:
+    AES() : Cipher(nBits/8, 16) {}
+    std::string get_algorithm() const override {
+      return "AES-" + std::to_string(nBits) + "/GCM";
+    }
+  };
+
+  typedef AES<256> AES256;
+  typedef AES<192> AES192;
+  typedef AES<128> AES128;

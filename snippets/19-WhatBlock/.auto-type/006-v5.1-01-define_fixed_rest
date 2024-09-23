@@ -1,0 +1,29 @@
+file: src/fixed.h
+line: 37
+align: top
+---
+⇥
+
+  class CASTS : public Cipher {
+  public:
+    CASTS() : Cipher(16, 8) {}
+    std::string get_algorithm() const override {
+      return "CAST-128/CBC";
+    }
+  };
+
+  class IDEA : public Cipher {
+  public:
+    IDEA() : Cipher(16, 8) {}
+    std::string get_algorithm() const override {
+      return "IDEA/CBC";
+    }
+  };
+
+  class SHACAL2 : public Cipher {
+  public:
+    SHACAL2() : Cipher(64, 32) {}
+    std::string get_algorithm() const override {
+      return "SHACAL2/CBC";
+    }
+  };
