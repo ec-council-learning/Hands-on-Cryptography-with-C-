@@ -1,0 +1,33 @@
+file: src/identity.cpp
+line: 62
+align: top
+---
+⇥↓↓↓↓⇥
+
+/// \brief Returns the fingerprint `SHA-256(pubkey)` for this identity.
+std::string SMSpp::Identity::Fingerprint() const
+{
+  // prepares a hasher instance using SHA-256
+  const auto hasher = Botan::HashFunction::create_or_throw("SHA-256");
+
+  // executes SHA-256 hash function with bytes
+  hasher->update(m_public_key->public_value());
+
+  // creates digest and return as hexadecimal
+  return Botan::hex_encode(hasher->final());
+}
+
+/// \brief Generates a random pair of ECDH private- and public-key.
+void SMSpp::Identity::GenerateRandom()
+{
+  Botan::AutoSeeded_RNG rng;
+
+  m_private_key = std::make_unique<PrivateKeyImpl>(
+    rng, Botan::EC_Group("secp256r1")
+  );
+
+  m_public_key  = std::make_unique<PublicKeyImpl>(
+    m_private_key->algorithm_identifier(),
+    m_private_key->public_key_bits()
+  );
+}

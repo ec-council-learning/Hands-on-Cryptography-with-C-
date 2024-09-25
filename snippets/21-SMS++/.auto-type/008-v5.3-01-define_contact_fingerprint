@@ -1,0 +1,30 @@
+file: src/contact.cpp
+line: 30
+align: top
+---
+↓↓↓⇥
+
+/// \brief Constructs a contact by copying another Contact instance.
+SMSpp::Contact::Contact(const Contact& rht)
+  : m_raw_public_key(rht.m_raw_public_key),
+    m_public_key(new SMSpp::PublicKeyImpl(*rht.m_public_key))
+{}
+
+/// \brief Constructs a contact by moving another Contact instance.
+SMSpp::Contact::Contact(const Contact&& rht)
+  : m_raw_public_key(std::move(rht.m_raw_public_key)),
+    m_public_key(new SMSpp::PublicKeyImpl(*rht.m_public_key))
+{}
+
+/// \brief Returns the fingerprint `SHA-256(pubkey)` for this contact.
+std::string SMSpp::Contact::Fingerprint() const
+{
+  // prepares a hasher instance using SHA-256
+  const auto hasher = Botan::HashFunction::create_or_throw("SHA-256");
+
+  // executes SHA-256 hash function with bytes
+  hasher->update(m_raw_public_key);
+
+  // creates digest and return as hexadecimal
+  return Botan::hex_encode(hasher->final());
+}
