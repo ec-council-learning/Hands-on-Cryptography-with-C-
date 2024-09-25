@@ -1,0 +1,15 @@
+file: src/botan.cpp
+line: 29
+align: top
+---
+⇥↓↓↓⇥
+
+std::string ztx::botan::Hash_Function(const std::string& message) {
+  std::vector<uint8_t> bytes(message.begin(), message.end());
+
+  // Hash the message using Whirlpool
+  const auto hash = Botan::HashFunction::create_or_throw("Whirlpool");
+  hash->update(bytes);
+
+  return Botan::hex_encode(hash->final());
+}

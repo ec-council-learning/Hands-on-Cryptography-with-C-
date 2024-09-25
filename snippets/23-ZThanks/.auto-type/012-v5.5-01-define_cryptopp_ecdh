@@ -1,0 +1,42 @@
+file: src/cryptopp.cpp
+line: 66
+align: top
+---
+⇥↓↓↓⇥
+
+std::string ztx::cryptopp::GetSecret_ECDH() {
+  // NIST's 256 bit curve over f(p)
+  OID CURVE = CryptoPP::ASN1::secp256r1();
+  CryptoPP::AutoSeededRandomPool prng;
+  std::string shared_secret;
+
+  // prepares 2 keypairs ("Alice" and "Bob")
+  // usually Alice and Bob would be on different devices
+  CryptoPP::ECDH<ECP>::Domain alice(CURVE),
+                              bob(CURVE);
+  SecByteBlock alice_privateKey(alice.PrivateKeyLength()),
+               alice_publicKey(alice.PublicKeyLength());
+  SecByteBlock bob_privateKey(bob.PrivateKeyLength()),
+               bob_publicKey(bob.PublicKeyLength());
+
+  // generates the random keypairs
+  alice.GenerateKeyPair(prng, alice_privateKey, alice_publicKey);
+  bob.GenerateKeyPair(prng, bob_privateKey, bob_publicKey);
+
+  // Alice and Bob shall agree on a shared secret
+  SecByteBlock alice_shared(alice.AgreedValueLength()),
+               bob_shared(bob.AgreedValueLength());
+
+  // creates the secret from Alice's perspective
+  alice.Agree(alice_shared, alice_privateKey, bob_publicKey); // A -> B
+
+  // creates the secret from Bob's perspective
+  bob.Agree(bob_shared, bob_privateKey, alice_publicKey); // B -> A
+
+  // Formats the shared secret in hexadecimal format
+  CryptoPP::HexEncoder key_encoder(new CryptoPP::StringSink(shared_secret));
+  key_encoder.Put((const CryptoPP::byte*) alice_shared.data(), alice_shared.size());
+  key_encoder.MessageEnd();
+
+  return shared_secret;
+}

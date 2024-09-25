@@ -1,0 +1,30 @@
+file: src/botan.cpp
+line: 55
+align: top
+---
+⇥↓↓↓⇥
+
+std::string ztx::botan::GetSecret_ECDH() {
+  Botan::AutoSeeded_RNG rng;
+
+  // ec domain and KDF
+  const auto CURVE = Botan::EC_Group("secp256r1");
+  const std::string kdf = "KDF2(SHA-256)";
+
+  // the two parties generate ECDH keys
+  Botan::ECDH_PrivateKey alice_privateKey(rng, CURVE);
+  Botan::ECDH_PrivateKey bob_privateKey(rng, CURVE);
+
+  // now they exchange their public values
+  const auto alice_publicKey = alice_privateKey.public_value();
+  const auto bob_publicKey   = bob_privateKey.public_value();
+
+  // Construct key agreements and agree on a shared secret
+  Botan::PK_Key_Agreement ka_a(alice_privateKey, rng, kdf);
+  const auto sA = ka_a.derive_key(32, bob_publicKey).bits_of();
+
+  Botan::PK_Key_Agreement ka_b(bob_privateKey, rng, kdf);
+  const auto sB = ka_b.derive_key(32, alice_publicKey).bits_of();
+
+  return Botan::hex_encode(sA);
+}

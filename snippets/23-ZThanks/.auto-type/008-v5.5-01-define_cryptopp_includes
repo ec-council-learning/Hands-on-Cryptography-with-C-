@@ -1,0 +1,18 @@
+file: src/cryptopp.cpp
+line: 1
+align: top
+---
+⇥
+#include <cryptopp/default.h> // DefaultEncryptor, DefaultDecryptor
+#include <cryptopp/filters.h> // StringSink, StringSource
+#include <cryptopp/base64.h> // Base64Encoder, Base64Decoder
+#include <cryptopp/hex.h> // HexEncoder
+#include <cryptopp/sha.h> // SHA256
+#include <cryptopp/xed25519.h> // ed25519..
+#include <cryptopp/osrng.h> // AutoSeededRandomPool
+#include <cryptopp/eccrypto.h> // ECDH, ECP, SHA256
+#include <cryptopp/oids.h> // ASN1::secp256r1
+#include "cryptopp.h"
+
+using CryptoPP::ECP, CryptoPP::OID;
+using CryptoPP::SecByteBlock;

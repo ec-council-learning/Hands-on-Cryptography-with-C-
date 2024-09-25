@@ -1,0 +1,17 @@
+file: src/botan.cpp
+line: 1
+align: top
+---
+⇥
+#include <botan/block_cipher.h> // SymmetricKey
+#include <botan/base64.h> // Base64Encoder, Base64Decoder
+#include <botan/pipe.h> // Pipe
+#include <botan/filters.h> // get_cipher
+#include <botan/hash.h> // HashFunction
+#include <botan/hex.h> // hex_encode
+#include <botan/auto_rng.h> // AutoSeeded_RNG
+#include <botan/ec_group.h> // EC_Group
+#include <botan/pubkey.h> // PK_Signer
+#include <botan/ecdsa.h> // ECDSA_PrivateKey, ECDSA_PublicKey
+#include <botan/ecdh.h> // ECDH_PrivateKey
+#include "botan.h"

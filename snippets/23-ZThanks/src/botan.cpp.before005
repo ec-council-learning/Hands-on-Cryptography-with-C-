@@ -1,0 +1,32 @@
+// src/botan.cpp
+#include <botan/block_cipher.h> // SymmetricKey
+#include <botan/base64.h> // Base64Encoder, Base64Decoder
+#include <botan/pipe.h> // Pipe
+#include <botan/filters.h> // get_cipher
+#include <botan/hash.h> // HashFunction
+#include <botan/hex.h> // hex_encode
+#include <botan/auto_rng.h> // AutoSeeded_RNG
+#include <botan/ec_group.h> // EC_Group
+#include <botan/pubkey.h> // PK_Signer
+#include <botan/ecdsa.h> // ECDSA_PrivateKey, ECDSA_PublicKey
+#include <botan/ecdh.h> // ECDH_PrivateKey
+#include "botan.h"
+
+std::string ztx::botan::Encrypt(const std::string& message) {
+  // Compute sha-256 of password to use as key
+  auto hash = Botan::HashFunction::create_or_throw("SHA-256");
+  hash->update("Hands-On Cryptography with C++");
+  auto key = hash->final();
+
+  // Uses a sha-256 hash of the password as the key
+  Botan::SymmetricKey k(key);
+
+  // Encrypts using Camellia-256 and hash of password
+  Botan::Pipe pipe(
+    Botan::get_cipher("Camellia-256/CBC", k, Botan::Cipher_Dir::Encryption),
+    new Botan::Base64_Encoder
+  );
+
+  pipe.process_msg(message);
+  return pipe.read_all_as_string();
+}

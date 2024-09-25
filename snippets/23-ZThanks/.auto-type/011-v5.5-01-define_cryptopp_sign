@@ -1,0 +1,29 @@
+file: src/cryptopp.cpp
+line: 42
+align: top
+---
+⇥↓↓↓⇥
+
+std::string ztx::cryptopp::Sign_ECDSA(const std::string& message) {
+  CryptoPP::AutoSeededRandomPool prng;
+
+  // Generates a random private key
+  auto signer = CryptoPP::ed25519Signer();
+  signer.AccessPrivateKey().GenerateRandom(prng);
+
+  std::string signature, sig_payload;
+
+  // Signs the message using the private key
+  // true = "pump-all"
+  CryptoPP::StringSource sig_source(message, true, new CryptoPP::SignerFilter(prng,
+    signer,
+    new CryptoPP::StringSink(signature)
+  ));
+
+  // Formats the signature in hexadecimal format
+  CryptoPP::StringSource hex_source(signature, true,  new CryptoPP::HexEncoder(
+    new CryptoPP::StringSink(sig_payload)
+  ));
+
+  return sig_payload;
+}

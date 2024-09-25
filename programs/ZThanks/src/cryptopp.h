@@ -1,0 +1,23 @@
+// src/cryptopp.h
+#ifndef __ZTHANKS_CRYPTOPP_H__
+#define __ZTHANKS_CRYPTOPP_H__
+#include <string> // std::string
+
+namespace ztx {
+namespace cryptopp {
+
+  /// \brief Encrypts a message using AES-256 (Crypto++).
+  std::string Encrypt(const std::string&);
+
+  /// \brief Hashes a message using SHA-256 (Crypto++).
+  std::string Hash_Function(const std::string&);
+
+  /// \brief Generates a random private key and signs the message (Crypto++).
+  std::string Sign_ECDSA(const std::string&);
+
+  /// \brief Generates a random shared secret for ECDH (Crypto++).
+  std::string GetSecret_ECDH();
+
+}
+}
+#endif

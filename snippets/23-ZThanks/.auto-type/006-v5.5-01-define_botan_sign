@@ -1,0 +1,21 @@
+file: src/botan.cpp
+line: 39
+align: top
+---
+⇥↓↓↓⇥
+
+std::string ztx::botan::Sign_ECDSA(const std::string& message) {
+  Botan::AutoSeeded_RNG rng;
+
+  // Generates a random private key
+  auto priv = std::make_unique<Botan::ECDSA_PrivateKey>(
+    rng, Botan::EC_Group("secp256r1")
+  );
+
+  // Signs the message using the private key
+  Botan::PK_Signer signer(*priv, rng, "SHA-256");
+  signer.update(message);
+  std::vector<uint8_t> sig = signer.signature(rng);
+
+  return Botan::hex_encode(sig);
+}

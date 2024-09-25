@@ -1,0 +1,18 @@
+file: src/cryptopp.cpp
+line: 29
+align: top
+---
+⇥↓↓↓⇥
+
+std::string ztx::cryptopp::Hash_Function(const std::string& message) {
+  std::string output;
+  CryptoPP::SHA256 hash;
+
+  // Hash the message using SHA-256
+  CryptoPP::StringSource source(message, true, new CryptoPP::HashFilter(
+    hash,
+    new CryptoPP::HexEncoder(new CryptoPP::StringSink(output))
+  ));
+
+  return output;
+}
