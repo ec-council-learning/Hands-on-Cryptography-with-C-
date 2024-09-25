@@ -1,0 +1,38 @@
+file: src/whisper.cpp
+line: 24
+align: top
+---
+⇥↓↓⇥
+
+/// \brief Encrypts a plaintext \a whisper destined at a friend.
+std::string wiz::Whisper::Write(const std::string& whisper) const
+{
+  Botan::AutoSeeded_RNG rng;
+
+  // initializes the ECDH session (derives ephemeral private key)
+  Botan::ECIES_Encryptor enc_pk(*(m_id.m_private_key), *(m_id.m_params), rng);
+  Botan::ECIES_Encryptor enc_full(*(m_id.m_private_key), *(m_id.m_params), rng);
+
+  // ECDH companion (friend) public key
+  enc_pk.set_other_key((*m_friend.m_public_key).public_point());
+  enc_full.set_other_key((*m_friend.m_public_key).public_point());
+
+  // random encryption seed (16 bytes IV) on a per-message basis
+  auto iv = Botan::OctetString(rng, 16);
+  enc_full.set_initialization_vector(iv);
+
+  // (1): encrypts the message using IV and private key ("full")
+  std::vector<uint8_t> wbytes(whisper.begin(), whisper.end());
+  std::vector<uint8_t> wcipher = enc_full.encrypt(wbytes, rng);
+
+  // prepends the IV to the encrypted bytes of the whisper
+  std::vector<uint8_t> bytes(wcipher.begin(), wcipher.end());
+  bytes.insert(bytes.begin(), iv.begin(), iv.end());
+
+  // (2): encrypts the IV and encrypted bytes using private key
+  // note: this permits to later decrypt the IV with private key
+  std::vector<uint8_t> cipher = enc_pk.encrypt(bytes, rng);
+
+  // returns as base64
+  return Botan::base64_encode(cipher);
+}
