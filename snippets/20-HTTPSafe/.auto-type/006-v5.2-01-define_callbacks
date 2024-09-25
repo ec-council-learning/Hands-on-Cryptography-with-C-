@@ -1,0 +1,41 @@
+file: src/client.cpp
+line: 80
+align: top
+---
+⇥↓↓↓⇥
+
+void HTTPSafe::Handlers::tls_emit_data(std::span<const uint8_t> data) {
+  channel_.async_send_data(data);
+}
+
+void HTTPSafe::Handlers::tls_record_received(
+  uint64_t seq_no,
+  std::span<const uint8_t> data
+) {
+  std::cout.write(reinterpret_cast<const char*>(data.data()), data.size());
+}
+
+void HTTPSafe::Handlers::tls_alert(Botan::TLS::Alert alert) {
+  std::cerr << "TLS Alert: " << alert.type_string() << std::endl;
+}
+
+void HTTPSafe::Handlers::tls_session_established(const Botan::TLS::Session_Summary &session) {
+  std::cout << "Session established with "
+            << session.server_info().hostname() << std::endl;
+
+  // Update completion flag
+  channel_.handshake_completed = true;
+}
+
+void HTTPSafe::Handlers::tls_session_activated() {
+  std::cout << "Session ready to be written to "
+            << channel_.get_host() << std::endl;
+
+  // Send an HTTP GET request over the established secure TLS channel
+  std::string request = 
+    "GET / HTTP/1.1\r\nHost: "
+    + channel_.get_host() + "\r\n"
+    + "Connection: close\r\n\r\n";
+
+  channel_.send_http_request(request);
+}

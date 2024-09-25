@@ -1,0 +1,44 @@
+file: src/client.cpp
+line: 40
+align: top
+---
+⇥↓↓↓↓⇥
+
+void HTTPSafe::Client::async_send_data(std::span<const uint8_t> data) {
+  boost::asio::write(socket_, boost::asio::buffer(data, data.size()));
+}
+
+void HTTPSafe::Client::async_read_data() {
+  socket_.async_read_some(boost::asio::buffer(buffer_),
+    [this](boost::system::error_code ec, std::size_t length)
+    {
+      if (!ec) {
+        // Feed the received data to Botan's TLS client
+        tls_client_->received_data(buffer_.data(), length);
+
+        // Continue reading for more data
+        async_read_data();
+      }
+      else if (ec != boost::asio::error::eof) {
+        throw boost::system::system_error(ec);
+      }
+    });
+
+  // tells boost::asio to execute async tasks
+  io_context_.run();
+}
+
+void HTTPSafe::Client::send_http_request(const std::string& request) {
+  if (! handshake_completed)
+    throw std::runtime_error(std::string("TLS handshake not completed. Cannot send request."));
+
+  // Send HTTP request over TLS
+  tls_client_->send(
+    reinterpret_cast<const uint8_t*>(request.data()),
+    request.size()
+  );
+}
+
+void HTTPSafe::Client::read_http_response() {
+  async_read_data();
+}

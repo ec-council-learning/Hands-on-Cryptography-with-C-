@@ -1,0 +1,19 @@
+file: src/client.h
+line: 34
+align: top
+---
+⇥↓↓⇥
+
+  // Define a class for handling asynchronous TLS callbacks
+  class Handlers: public Botan::TLS::Callbacks {
+    Client&  channel_;
+  public:
+    Handlers(Client& channel) : channel_(channel) {}
+
+    // TLS callbacks implementation
+    void tls_emit_data(std::span<const uint8_t> data) override;
+    void tls_record_received(uint64_t seq_no, std::span<const uint8_t> data) override;
+    void tls_alert(Botan::TLS::Alert alert) override;
+    void tls_session_established(const Botan::TLS::Session_Summary &session) override;
+    void tls_session_activated() override;
+  };
