@@ -16,7 +16,24 @@ int main(int argc, char* argv[])
 
   std::string command = argv[1], contact = argv[2], message = argv[3];
 
+  // first setup the current identity (ECDH private/public key)
+  std::string id_file = "data/id_ecdh.smsid";
+  SMSpp::Identity* user = new SMSpp::Identity(id_file);
 
+  // creates a ECDH ephemeral private key for communications
+  // between `user` (the sender) and `chatee` (the recipient).
+  SMSpp::Contact* chatee = new SMSpp::Contact(contact);
+  SMSpp::Message*   chat = new SMSpp::Message(*user, *chatee);
+  std::cout << "Session created successfully." << std::endl;
+
+  try {
+    // handles the "SMS read" and "SMS write" commands
+    std::string result = chat->Handle(command, message);
+    std::cout << "Result: " << result << std::endl;
+  }
+  catch (Botan::Exception& e) {
+    std::cerr << "Decryption failed. Must be recipient to decrypt!" << std::endl;
+  }
 
   delete chat;
   delete chatee;

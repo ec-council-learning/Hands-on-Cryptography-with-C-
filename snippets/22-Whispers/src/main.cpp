@@ -1,4 +1,24 @@
 // src/main.cpp
+#include <iostream> // std::cout
+#include <string> // std::string
+#include "identity.h" // wiz::Identity
+#include "contact.h" // wiz::Contact
+#include "whisper.h" // wiz::Whisper
+
+int print_usage() {
+  std::cout
+    << "Usage: wiz [-h] <command> <friend-pubkey> <whisper>\n"
+    << "  e.g: wiz id\n"
+    << "  e.g: wiz write path/recipient/pubkey \"Hey, this is my whisper!\"\n"
+    << "  e.g: wiz read path/sender/pubkey \"...Jf5qIvDv/10Xdfwz8z9D...\"\n"
+    << "\nFLAGS: \n"
+    << "  -h: Prints this help message and usage examples.\n"
+    << "\nCOMMANDS: \n"
+    << "  write: Create an encrypted Whisper destined at a ECDH public key.\n"
+    << "  read: Read an encrypted Whisper as received from ECDH public key.\n"
+    << "  id: Create new Whisper ID to accept Whispers for ECDH public key.\n";
+  return 1;
+}
 
 int main(int argc, char* argv[])
 {
@@ -26,9 +46,7 @@ int main(int argc, char* argv[])
     return print_usage();
 
   // parses command options for read and write commands
-  std::string command = argv[1],
-              contact = argv[2],
-              whisper = argv[3];
+  std::string command = argv[1], contact = argv[2], whisper = argv[3];
 
   // first setup the current identity (ECDH private/public key)
   user = new wiz::Identity(id_file);

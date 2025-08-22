@@ -27,7 +27,7 @@ SMSpp::Identity::Identity(const std::string& id_file)
 {
   std::filesystem::directory_entry entry{id_file};
 
-  // loads an identity from file using (PEM-encoded or DER-encoded)
+  // loads an identity from file (PEM-encoded or DER-encoded)
   if (entry.exists()) {
     Import(id_file);
   }

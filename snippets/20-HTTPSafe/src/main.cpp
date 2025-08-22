@@ -17,14 +17,7 @@ int main(int argc, char* argv[])
   const auto host = argv[1];
 
   try {
-    // Initialize boost::asio I/O context
-    boost::asio::io_context io_context;
 
-    // Connect to server (e.g., www.example.com on port 443)
-    HTTPSafe::Client client(io_context, host, "443");
-
-    // Receive and print the HTTP response
-    client.read_http_response();
   }
   catch(std::exception& e) {
     std::cerr << "Error: " << e.what();

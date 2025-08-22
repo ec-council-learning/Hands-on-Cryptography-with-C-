@@ -7,7 +7,6 @@
 #include "identity.h" // Identity, PublicKeyImpl
 
 namespace SMSpp {
-
   class Message;
 
   /// \brief Class implementation that describes contacts ("friends").
@@ -25,6 +24,5 @@ namespace SMSpp {
 
     std::string Fingerprint() const;
   };
-
 }
 #endif

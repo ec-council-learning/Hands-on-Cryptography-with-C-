@@ -10,7 +10,7 @@ align: top
 #include <botan/credentials_manager.h> // Credentials_Manager
 
 namespace HTTPSafe {
-  // Custom Credentials Manager to handle certificates
+  // Credentials Manager to handle certificates
   class CredentialsManager : public Botan::Credentials_Manager
   {
   public:

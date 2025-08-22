@@ -1,1 +1,52 @@
 // src/client.h
+#ifndef __HTTPSAFE_CLIENT_H__
+#define __HTTPSAFE_CLIENT_H__
+#include <string> // std::string
+#include <memory> // std::unique_ptr
+#include <span> // std::span
+#include <botan/auto_rng.h> // AutoSeeded_RNG
+#include <botan/asio_compat.h> // Stream ASIO
+#include <boost/asio.hpp> // boost::asio
+#include "backend.h"
+
+namespace HTTPSafe {
+  // Define a class for handling the HTTPS client
+  class Client {
+    boost::asio::io_context&                io_context_;
+    boost::asio::ip::tcp::socket                socket_;
+    boost::asio::ip::tcp::resolver            resolver_;
+    std::shared_ptr<Botan::AutoSeeded_RNG>         rng_;
+    std::unique_ptr<Botan::TLS::Client>     tls_client_;
+
+    std::string                 host_;
+    std::array<uint8_t, 4096> buffer_;
+
+  public:
+    bool handshake_completed  = false;
+
+    // Default constructor
+    Client(boost::asio::io_context&, const std::string&, const std::string&);
+    std::string get_host() const { return host_; }
+
+    void async_send_data(std::span<const uint8_t>);
+    void async_read_data();
+
+    void send_http_request(const std::string&);
+    void read_http_response();
+  };
+
+  // Define a class for handling asynchronous TLS callbacks
+  class Handlers: public Botan::TLS::Callbacks {
+    Client&  channel_;
+  public:
+    Handlers(Client& channel) : channel_(channel) {}
+
+    // TLS callbacks implementation
+    void tls_emit_data(std::span<const uint8_t> data) override;
+    void tls_record_received(uint64_t seq_no, std::span<const uint8_t> data) override;
+    void tls_alert(Botan::TLS::Alert alert) override;
+    void tls_session_established(const Botan::TLS::Session_Summary &session) override;
+    void tls_session_activated() override;
+  };
+}
+#endif
