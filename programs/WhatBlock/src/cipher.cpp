@@ -32,7 +32,7 @@ std::string WhatBlock::Cipher::encrypt(std::string input) const {
 
   // PKCS5 Padding: Makes sure that data is padded
   // to a size that is a multiple of the BLOCKSIZE
-  size_t old_size = bytes.size(); saa 
+  size_t old_size = bytes.size();
   if (0 != bytes.size() % m_block_size) {
     // padding m bytes with m value
     size_t bs = m_block_size,

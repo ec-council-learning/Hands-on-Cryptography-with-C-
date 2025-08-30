@@ -21,7 +21,7 @@ namespace CurvyPP {
       : m_signer(signer)
     {}
 
-    /// \brief Signs a message and returns the signature payload (base64-encoded)
+    /// \brief Signs a message and returns the signature payload (hex-encoded)
     std::string Sign(std::string message)
     {
       std::string signature, sig_payload;
